@@ -31,6 +31,7 @@ type StorageBucketModel struct {
 	Pool        types.String `tfsdk:"pool"`
 	Project     types.String `tfsdk:"project"`
 	Target      types.String `tfsdk:"target"`
+	File        types.String `tfsdk:"file"`
 	Remote      types.String `tfsdk:"remote"`
 	Config      types.Map    `tfsdk:"config"`
 
@@ -98,6 +99,14 @@ func (r StorageBucketResource) Schema(ctx context.Context, req resource.SchemaRe
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
+				Validators: []validator.String{
+					stringvalidator.LengthAtLeast(1),
+				},
+			},
+
+			"file": schema.StringAttribute{
+				Optional: true,
+				Computed: false,
 				Validators: []validator.String{
 					stringvalidator.LengthAtLeast(1),
 				},
